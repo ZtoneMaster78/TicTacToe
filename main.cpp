@@ -92,9 +92,20 @@ int main() {
             playerTurn = false;
         }
 
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                cout << playerPiece[i][j];
+            } cout << ln;
+        }
+
         winner = isThereWinner(boardSize, playerPiece);
         line();
     } while (winner == 0);
+
+    displayBoard(boardSize, playerPiece);
+    line();
+
+    cout << "Player " << winner << " wins" << ln;
 
     return 0;
 }
@@ -143,15 +154,15 @@ int isThereWinner (int boardSize, vector<vector<char>> playerPiece) {
         diagonalOne = 0;
         diagonalTwo = 0;
 
-        if (i < (2 * boardSize - 3) / 2) {
+        if (i < boardSize - 2) {
             row = boardSize - i - 3;
             col = 0;
         } else {
             row = 0;
-            col = i - boardSize + 3;
+            col = i - (boardSize - 3);
         }
         
-        while (row < boardSize || col < boardSize) {
+        while (row < boardSize && col < boardSize) {
             if (playerPiece[row][col] == empty) {
                 diagonalOne = 0;
                 diagonalTwo = 0;
@@ -162,7 +173,7 @@ int isThereWinner (int boardSize, vector<vector<char>> playerPiece) {
                 if (diagonalOne > 2) return 1;
             } else {
                 diagonalOne = 0;
-                diagonalOne++;
+                diagonalTwo++;
 
                 if (diagonalTwo > 2) return 2;
             }
@@ -177,7 +188,7 @@ int isThereWinner (int boardSize, vector<vector<char>> playerPiece) {
         diagonalOne = 0;
         diagonalTwo = 0;
 
-        if (i < (2 * boardSize - 3) / 2) {
+        if (i < boardSize - 2) {
             row = boardSize - i - 3;
             col = boardSize - 1;
         } else {
@@ -185,7 +196,7 @@ int isThereWinner (int boardSize, vector<vector<char>> playerPiece) {
             col = 2 * boardSize - i - 4;
         }
         
-        while (row < boardSize || col >= 0) {
+        while (row < boardSize && col >= 0) {
             if (playerPiece[row][col] == empty) {
                 diagonalOne = 0;
                 diagonalTwo = 0;
@@ -196,7 +207,7 @@ int isThereWinner (int boardSize, vector<vector<char>> playerPiece) {
                 if (diagonalOne > 2) return 1;
             } else {
                 diagonalOne = 0;
-                diagonalOne++;
+                diagonalTwo++;
 
                 if (diagonalTwo > 2) return 2;
             }
